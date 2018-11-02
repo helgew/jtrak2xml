@@ -1,0 +1,9 @@
+.DS_Store
+.git
+lib/
+.idea
+*.iml
+target/
+dist/*SNAPSHOT*
+release.properties
+pom.xml.releaseBackup
