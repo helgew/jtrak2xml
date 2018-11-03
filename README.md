@@ -11,13 +11,13 @@ These can then be imported into other dive log software applications.
 ## Getting Started
 
 To convert your dive log into one of the XML formats supported, [download the latest release 
-(1.0-alpha-2)](https://github.com/helgew/jtrak2xml/releases/download/jtrak2xml-1.0-alpha-2/jtrak2xml.1.0-alpha-2.jar)
+(1.0-alpha-3-SNAPSHOT)](https://github.com/helgew/jtrak2xml/releases/download/jtrak2xml-1.0-alpha-3-SNAPSHOT/jtrak2xml.1.0-alpha-3-SNAPSHOT.jar)
 and run the jar from a terminal. For example, in OS X, you would start the Terminal.app
 (look for it under `/Applications/Utilities`) and run the follwing 
 command (assuming you downloaded the distribution to your `Downloads` folder):
 
 ```
-java -jar ~/Downloads/jtrak2xml.1.0-alpha-2.jar
+java -jar ~/Downloads/jtrak2xml.1.0-alpha-3-SNAPSHOT.jar
 ```
 
 ### Prerequisites

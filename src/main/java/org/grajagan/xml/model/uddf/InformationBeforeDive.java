@@ -42,6 +42,9 @@ public class InformationBeforeDive {
     Integer divenumber;
 
     @XmlElement
+    Integer divenumberofday;
+
+    @XmlElement
     Date datetime;
 
     @XmlElement

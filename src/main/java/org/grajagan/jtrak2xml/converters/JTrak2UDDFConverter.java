@@ -151,6 +151,7 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
         root.setMixList(mixList);
 
         int diveCounter = 0;
+        int numDiveOfDay = 1;
         for (de.frobese.jtrak.dc.base.Dive jtrakDive : profile.getTauchgangList()) {
             if (jtrakDive.getInterval() == 0) {
                 diveList = new ArrayList<>();
@@ -183,9 +184,13 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
 
             if (jtrakDive.getInterval() == 0) {
                 surfaceInterval.setInfinity("");
+                numDiveOfDay = 1;
             } else {
                 surfaceInterval.setIntervalInSeconds(jtrakDive.getInterval() * 60);
+                numDiveOfDay++;
             }
+
+            informationbeforedive.setDivenumberofday(numDiveOfDay);
 
             informationbeforedive.setDatetime(jtrakDive.getDate());
 

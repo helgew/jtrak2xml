@@ -101,7 +101,7 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
             dive.setIdentifier("dive_" + ++diveCounter);
             dive.setSurfaceInterval(jtrakDive.getInterval());
             dive.setRating(jtrakDive.getVote());
-            dive.setRepetitiveDive(repetitiveDive++);
+            dive.setRepetitiveDive(++repetitiveDive);
             dive.setDiver(owner);
             dive.setDiveNumber(++diveNumber);
 
