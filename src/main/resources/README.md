@@ -1,7 +1,7 @@
 # JTrak2XML
 
-JTrak2XML converts dive log information managed with [JTrak](https://www.frobese.de/JTrak/en/jtrak.html) to generic XML-based formats. These can then be imported into other dive
- log software applications.
+JTrak2XML converts dive log information managed with [JTrak](https://www.frobese.de/JTrak/en/jtrak.html) to generic XML-based formats.
+These can then be imported into other dive log software applications.
 
 ## Supported Formats
 
@@ -10,13 +10,14 @@ JTrak2XML converts dive log information managed with [JTrak](https://www.frobese
 
 ## Getting Started
 
-To convert your dive log into one of the XML formats supported, download the latest release 
-(${project.version}) and run the jar from a terminal. For example, in OS X, you 
-would start the Terminal.app (look for it under `/Applications/Utilities`) and run the follwing 
+To convert your dive log into one of the XML formats supported, [download the latest release 
+(${project.version})](https://github.com/helgew/jtrak2xml/releases/download/${project.artifactId}-${project.version}/${project.artifactId}.${project.version}.${project.packaging})
+and run the jar from a terminal. For example, in OS X, you would start the Terminal.app
+(look for it under `/Applications/Utilities`) and run the follwing 
 command (assuming you downloaded the distribution to your `Downloads` folder):
 
 ```
-java -jar ~/Downloads/${project.artifactId}.${project.version}.jar
+java -jar ~/Downloads/${project.artifactId}.${project.version}.${project.packaging}
 ```
 
 ### Prerequisites

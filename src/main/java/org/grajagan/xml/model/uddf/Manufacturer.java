@@ -26,23 +26,13 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DiveComputer {
-    @XmlAttribute
-    String id;
-
-    @XmlElement
-    String name;
-
-    @XmlElement
-    String serialnumber;
-
+public class Manufacturer {
     @XmlElement(nillable = true)
-    Manufacturer manufacturer;
+    String name;
 }

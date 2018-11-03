@@ -43,6 +43,7 @@ import org.grajagan.xml.model.uddf.Geography;
 import org.grajagan.xml.model.uddf.InformationAfterDive;
 import org.grajagan.xml.model.uddf.InformationBeforeDive;
 import org.grajagan.xml.model.uddf.Link;
+import org.grajagan.xml.model.uddf.Manufacturer;
 import org.grajagan.xml.model.uddf.Mix;
 import org.grajagan.xml.model.uddf.Notes;
 import org.grajagan.xml.model.uddf.Owner;
@@ -355,7 +356,12 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 computer.setName(TCUtils.getDeviceName(computerId));
                 computer.setSerialnumber(computerSerial.toString());
                 computer.setId(XmlUtil.generateId());
-                computer.setManufacturer("Uwatec");
+
+                Manufacturer manufacturer = new Manufacturer();
+                manufacturer.setName("Uwatec");
+                computer.setManufacturer(manufacturer);
+
+                diveComputerMap.put(id, computer);
 
                 diveComputerMap.put(id, computer);
                 diveComputerList.add(computer);

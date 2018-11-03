@@ -126,7 +126,7 @@
             <groupId>de.frobese.jtrak</groupId>
             <artifactId>jtrak</artifactId>
             <version>1.2.4</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -225,12 +225,6 @@
                     <licenseResolver>${project.baseUri}/src/license</licenseResolver>
                 </configuration>
                 <executions>
-                    <execution>
-                        <id>download-licenses</id>
-                        <goals>
-                            <goal>download-licenses</goal>
-                        </goals>
-                    </execution>
                     <execution>
                         <id>update-file-headers</id>
                         <goals>
