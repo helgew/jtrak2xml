@@ -390,7 +390,7 @@ public class StartUpDialog extends JDialog {
 
         try {
             if ((outputFile.exists() && !outputFile.canWrite()) || (!outputFile.exists()
-                    && !outputFile.getParentFile().createNewFile())) {
+                    && !outputFile.getParentFile().canWrite())) {
                 outputFile = null;
                 // TODO
                 return;

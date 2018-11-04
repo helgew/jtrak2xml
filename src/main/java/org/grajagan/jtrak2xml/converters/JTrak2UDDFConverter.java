@@ -232,14 +232,17 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
             }
 
             informationafterdive.setGreatestdepth((float) jtrakDive.getMaxDepth() / 100);
-            informationafterdive.setAveragedepth((float) jtrakDive.getAverageDepth() / 100);
+
+            // that value ain't right!
+            // informationafterdive.setAveragedepth((float) jtrakDive.getAverageDepth() / 100);
+
             informationafterdive.setDiveduration((float) jtrakDive.getDiveTime() * 60);
             informationafterdive.setVisibility((float) jtrakDive.getVisibility() / 100);
             informationafterdive.setLowesttemperature(getTempInK(jtrakDive.getMinTemp()));
 
             if (jtrakDive.getVote() != 0) {
                 Rating rating = new Rating();
-                rating.setRatingvalue(jtrakDive.getVote());
+                rating.setRatingvalue(jtrakDive.getVote() * 2);
                 informationafterdive.setRating(rating);
             }
 
@@ -394,10 +397,19 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
             List<WayPoint> wayPoints = new ArrayList<>();
             dive.setWayPoints(wayPoints);
 
+            Float averageDepth = 0f;
+            Float depthSeconds = 0f;
+
             for (int i = 0; i < depthData.length; i++) {
                 WayPoint wayPoint = new WayPoint();
-                wayPoint.setDivetime((float) i * 60 / offset);
-                wayPoint.setDepth((depthData[i] - depthData[0]) / 1000f * 10);
+                Float secs = (float) i * 60 / offset;
+                wayPoint.setDivetime(secs);
+
+                Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
+                wayPoint.setDepth(depth);
+
+                depthSeconds += (60 / offset) * depth;
+                averageDepth = depthSeconds / secs;
 
                 if (haveTemperature) {
                     wayPoint.setTemperature(getTempInK(tempData[i]));
@@ -412,6 +424,8 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
 
                 wayPoints.add(wayPoint);
             }
+
+            informationafterdive.setAveragedepth(averageDepth);
         }
 
         try {
