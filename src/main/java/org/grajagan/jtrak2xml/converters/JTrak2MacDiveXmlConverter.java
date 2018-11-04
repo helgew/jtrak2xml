@@ -131,7 +131,10 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
             itemSet.add(computer);
 
             dive.setMaxDepth(jtrakDive.getMaxDepth() / 100f);
-            dive.setAverageDepth(jtrakDive.getAverageDepth() / 100f);
+
+            // this value is not reliable
+            // dive.setAverageDepth(jtrakDive.getAverageDepth() / 100f);
+
             dive.setDuration(jtrakDive.getDiveTime() * 60);
             dive.setTempAir(jtrakDive.getAirTemp() / 10f);
             dive.setTempHigh(jtrakDive.getMaxTemp() / 10f);
@@ -233,10 +236,20 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
             List<Sample> samples = new ArrayList<>();
             dive.setSamples(samples);
 
+            Float averageDepth = 0f;
+            Float depthSeconds = 0f;
+
             for (int i = 0; i < depthData.length; i++) {
                 Sample sample = new Sample();
-                sample.setTime((float) i * 60 / offset);
+
+                Float secs = (float) i * 60 / offset;
+                sample.setTime(secs);
+
+                Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
                 sample.setDepth((depthData[i] - depthData[0]) / 1000f * 10);
+
+                depthSeconds += (60 / offset) * depth;
+                averageDepth = depthSeconds / secs;
 
                 if (haveTemperature) {
                     sample.setTemperature(tempData[i] / 10f);
@@ -251,6 +264,8 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
 
                 samples.add(sample);
             }
+
+            dive.setAverageDepth(averageDepth);
         }
 
         try {
