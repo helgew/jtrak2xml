@@ -4,6 +4,6 @@ lib/
 .idea
 *.iml
 target/
-dist/*SNAPSHOT*
+dist/
 release.properties
 pom.xml.releaseBackup
