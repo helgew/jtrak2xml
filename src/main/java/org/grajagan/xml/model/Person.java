@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchema;
+import java.util.Objects;
 
 @Data
 @XmlRootElement(namespace = "http://www.streit.cc/uddf/3.2/")
@@ -45,5 +46,10 @@ public class Person {
     @Override
     public String toString() {
         return firstname + " " + lastname;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname, lastname);
     }
 }

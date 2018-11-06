@@ -23,24 +23,30 @@ package org.grajagan.xml.model.uddf;
  */
 
 import lombok.Data;
-import org.grajagan.xml.XmlUtil;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.util.Objects;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DiveBase {
+    @XmlTransient
+    String id;
+
     @XmlAttribute
-    String id = XmlUtil.generateId();
+    public String getId() {
+        if (id == null) {
+            id = "divebase_" + Objects.hash(name, address);
+        }
 
-    @XmlElement
+        return id;
+    }
+
     String name;
-
-    @XmlElement
     Address address;
 }

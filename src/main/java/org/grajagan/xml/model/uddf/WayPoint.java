@@ -26,22 +26,14 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WayPoint {
-    @XmlElement
     Float depth;
-
-    @XmlElement
     Float divetime;
-
-    @XmlElement
-    Float temperature;
-
-    @XmlElement
     Float tankpressure;
+    Float temperature;
 }

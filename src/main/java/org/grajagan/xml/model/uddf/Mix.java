@@ -44,35 +44,19 @@ public class Mix {
     @XmlAttribute(required = true)
     String id;
 
-    @XmlElement
     String name;
 
     @NonNull
     @XmlElement(required = true)
     Float o2;
 
-    @XmlElement
     Float n2;
-
-    @XmlElement
     Float he;
-
-    @XmlElement
     Float ar;
-
-    @XmlElement
     Float h2;
-
-    @XmlElement
     Float equivalentairdepth;
-
-    @XmlElement
     Float maximumoperationdepth;
-
-    @XmlElement
     Float maximumpo2;
-
-    @XmlElement
     String notes;
 
     public Mix(String id, Float o2) {

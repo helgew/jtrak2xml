@@ -30,6 +30,7 @@ import de.frobese.jtrak.model.Partner;
 import de.frobese.jtrak.model.Profile;
 import de.frobese.jtrak.model.Type;
 import de.frobese.jtrak.util.TCUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.grajagan.xml.model.Person;
 import org.grajagan.xml.model.macdive.Dive;
@@ -56,6 +57,8 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
     private static final Logger logger = Logger.getLogger(JTrak2MacDiveXmlConverter.class);
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
+
         JTrak2MacDiveXmlConverter exporter = new JTrak2MacDiveXmlConverter();
         File outFile = new File(System.getProperty("user.home") + "/Desktop/jtrak-export.xml");
 

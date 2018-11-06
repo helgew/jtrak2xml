@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -41,14 +40,12 @@ public class RootElement {
     @XmlAttribute
     private static final String version = "3.2.1";
 
-    @XmlElement
     private Generator generator;
 
     @XmlElementWrapper(name = "diver")
     @XmlAnyElement
     private List<IDiver> divers;
 
-    @XmlElement
     DiveSite divesite;
 
     @XmlElementWrapper(name = "gasdefinitions")

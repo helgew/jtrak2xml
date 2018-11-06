@@ -28,23 +28,25 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Address {
-    @XmlElement
     String city;
 
     @XmlElement(required = true)
     String country;
 
-    @XmlElement
     String postcode;
 
-    @XmlElement
     String province;
 
-    @XmlElement
     String street;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, country, postcode, province, street);
+    }
 }

@@ -29,20 +29,28 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DiveComputer {
-    @XmlAttribute
+    @XmlTransient
     String id;
 
-    @XmlElement
-    String name;
+    @XmlAttribute
+    public String getId() {
+        if (id == null) {
+            id = "computer-" + name.hashCode() + "-" + serialnumber;
+        }
 
-    @XmlElement
-    String serialnumber;
+        return id;
+    }
+
+    String name;
 
     @XmlElement(nillable = true)
     Manufacturer manufacturer;
+
+    String serialnumber;
 }

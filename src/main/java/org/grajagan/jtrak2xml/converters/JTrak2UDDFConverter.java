@@ -28,8 +28,8 @@ import de.frobese.jtrak.dc.smartpro.SmartProDive;
 import de.frobese.jtrak.model.Partner;
 import de.frobese.jtrak.model.Profile;
 import de.frobese.jtrak.util.TCUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.grajagan.xml.XmlUtil;
 import org.grajagan.xml.model.IDiver;
 import org.grajagan.xml.model.Person;
 import org.grajagan.xml.model.uddf.Address;
@@ -73,6 +73,8 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
     private static final Logger logger = Logger.getLogger(JTrak2UDDFConverter.class);
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
+
         JTrak2UDDFConverter exporter = new JTrak2UDDFConverter();
         File outFile = new File(System.getProperty("user.home") + "/Desktop/jtrak-export.uddf");
 
@@ -136,8 +138,9 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
         group.setDives(diveList);
 
         Equipment equipment = owner.getEquipment();
-        List<Tank> tankList = equipment.getTankList();
-        List<Suit> suitList = equipment.getSuitList();
+        Set<Tank> tankSet = equipment.getTankSet();
+        Set<Suit> suitSet = equipment.getSuitSet();
+
         Map<String, Suit> suitMap = new HashMap<>();
 
         List<DiveComputer> diveComputerList = equipment.getDiveComputerList();
@@ -186,7 +189,7 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 surfaceInterval.setInfinity("");
                 numDiveOfDay = 1;
             } else {
-                surfaceInterval.setIntervalInSeconds(jtrakDive.getInterval() * 60);
+                surfaceInterval.setPassedtime(jtrakDive.getInterval() * 60);
                 numDiveOfDay++;
             }
 
@@ -274,15 +277,13 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
 
             mix = mixMap.get(o2);
             tankDataList.get(0).setLink(new Link(mix.getId()));
+
             Tank tank = new Tank();
-
-            String id = XmlUtil.generateId();
-            tank.setId(id);
-            equipmentUsed.add(new Link(id));
-
             tank.setTankmaterial(jtrakDive.getBottle().replace("db.bottle.", ""));
             tank.setTankvolume((float) jtrakDive.getTankVolume() / 1000);
-            tankList.add(tank);
+
+            tankSet.add(tank);
+            equipmentUsed.add(new Link(tank.getId()));
 
             if (jtrakDive.getO2mixture2() != 0) {
                 o2 = jtrakDive.getO2mixture2();
@@ -296,13 +297,11 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 tankDataList.get(1).setLink(new Link(mix.getId()));
 
                 tank = new Tank();
-                id = XmlUtil.generateId();
-                tank.setId(id);
-                equipmentUsed.add(new Link(id));
-
                 tank.setTankmaterial(jtrakDive.getBottle2().replace("db.bottle.", ""));
                 tank.setTankvolume((float) jtrakDive.getTank2Volume() / 1000);
-                tankList.add(tank);
+
+                tankSet.add(tank);
+                equipmentUsed.add(new Link(tank.getId()));
             }
 
             if (jtrakDive.getO2mixtureD() != 0) {
@@ -317,13 +316,11 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 tankDataList.get(2).setLink(new Link(mix.getId()));
 
                 tank = new Tank();
-                id = XmlUtil.generateId();
-                tank.setId(id);
-                equipmentUsed.add(new Link(id));
-
                 tank.setTankmaterial(jtrakDive.getBottleD().replace("db.bottle.", ""));
                 tank.setTankvolume((float) jtrakDive.getTankDVolume() / 1000);
-                tankList.add(tank);
+
+                tankSet.add(tank);
+                equipmentUsed.add(new Link(tank.getId()));
             }
 
             String suitType = jtrakDive.getSuit().replace("suite", "suit").replaceAll("\\.", "_")
@@ -349,27 +346,24 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 suit.setSuitType(type);
                 suit.setId(suitType);
                 suitMap.put(suitType, suit);
-                suitList.add(suit);
             }
 
             Suit suit = suitMap.get(suitType);
+            suitSet.add(suit);
             equipmentUsed.add(new Link(suit.getId()));
 
             DiveComputer computer;
             Long computerSerial = jtrakDive.getDeviceID();
             Byte computerId = jtrakDive.getDeviceType();
-            id = computerId + "-" + computerSerial;
+            String id = computerId + "-" + computerSerial;
             if (!diveComputerMap.containsKey(id)) {
                 computer = new DiveComputer();
                 computer.setName(TCUtils.getDeviceName(computerId));
                 computer.setSerialnumber(computerSerial.toString());
-                computer.setId(XmlUtil.generateId());
 
                 Manufacturer manufacturer = new Manufacturer();
                 manufacturer.setName("Uwatec");
                 computer.setManufacturer(manufacturer);
-
-                diveComputerMap.put(id, computer);
 
                 diveComputerMap.put(id, computer);
                 diveComputerList.add(computer);

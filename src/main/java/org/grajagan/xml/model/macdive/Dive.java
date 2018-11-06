@@ -41,19 +41,13 @@ import java.util.Set;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Dive {
-    @XmlElement
     String date;
-
-    @XmlElement
     String identifier;
-
-    @XmlElement
-    Integer diveNumber = 0;
+    Integer diveNumber;
 
     @XmlElement(nillable = true)
     Integer rating;
 
-    @XmlElement
     Integer repetitiveDive;
 
     // a bit of voodoo to keep <diver> in the right order while using Person
@@ -82,7 +76,6 @@ public class Dive {
     @XmlElement(nillable = true)
     Float averageDepth;
 
-    @XmlElement
     Float cns = 0.00f;
 
     @XmlElement(nillable = true)
@@ -142,7 +135,6 @@ public class Dive {
     @XmlElement(nillable = true)
     String entryType;
 
-    @XmlElement
     Site site;
 
     @XmlElementWrapper(name = "tags")

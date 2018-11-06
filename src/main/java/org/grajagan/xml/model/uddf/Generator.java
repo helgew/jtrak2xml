@@ -26,7 +26,6 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
@@ -34,15 +33,8 @@ import java.util.Date;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Generator {
-    @XmlElement
     private String name;
-
-    @XmlElement
     private String type = "logbook";
-
-    @XmlElement
     private String version = "1.0";
-
-    @XmlElement
     private Date datetime;
 }

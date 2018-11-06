@@ -26,13 +26,27 @@ import lombok.Data;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Manufacturer {
-    @XmlElement(nillable = true)
+    @XmlTransient
+    String id;
+
+    @XmlAttribute
+    public String getId() {
+        if (id == null) {
+            id = "manufacturer-" + name.hashCode();
+        }
+
+        return id;
+    }
+
+    @XmlElement(required = true)
     String name;
 }

@@ -38,18 +38,9 @@ public class InformationBeforeDive {
     @XmlElement(name = "link")
     Set<Link> links;
 
-    @XmlElement
     Integer divenumber;
-
-    @XmlElement
     Integer divenumberofday;
-
-    @XmlElement
     Date datetime;
-
-    @XmlElement
     Float airtemperature;
-
-    @XmlElement
     SurfaceInterval surfaceintervalbeforedive;
 }

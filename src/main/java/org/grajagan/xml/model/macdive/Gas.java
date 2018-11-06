@@ -39,10 +39,7 @@ public class Gas {
     @XmlElement(nillable = true)
     Float pressureEnd;
 
-    @XmlElement
     Integer oxygen;
-
-    @XmlElement
     Integer helium = 0;
 
     @XmlElement(name = "double")
@@ -51,16 +48,12 @@ public class Gas {
     @XmlElement(nillable = true)
     Integer tankSize;
 
-    @XmlElement
     Integer workingPressure = 0;
-
-    @XmlElement
     String supplyType = "Open Circuit";
 
     @XmlElement(nillable = true)
     Integer duration;
 
-    @XmlElement
     String tankName;
 
     @Override
