@@ -23,7 +23,6 @@ package org.grajagan.xml.model.uddf;
  */
 
 import lombok.Data;
-import org.grajagan.xml.XmlUtil;
 import org.grajagan.xml.model.IDiver;
 import org.grajagan.xml.model.Person;
 
@@ -43,7 +42,6 @@ public class Diver implements IDiver {
     @XmlElement(name = "personal")
     Person person;
 
-    @XmlElement
     Equipment equipment = new Equipment();
 
     public Diver(String name) {
@@ -51,7 +49,7 @@ public class Diver implements IDiver {
         person.setFirstname(name.replaceAll(" .*", ""));
         person.setLastname(name.replaceFirst("\\w+\\s+", ""));
 
-        id = XmlUtil.generateId();
+        setId("" + person.hashCode());
     }
 
     public Diver() {}

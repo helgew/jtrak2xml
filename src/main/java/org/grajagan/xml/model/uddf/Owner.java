@@ -32,4 +32,9 @@ public class Owner extends Diver {
     public Owner(String name) {
         super(name);
     }
+
+    @Override
+    public void setId(String id) {
+        this.id = "owner-" + id;
+    }
 }

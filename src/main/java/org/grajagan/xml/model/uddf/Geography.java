@@ -28,26 +28,21 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Objects;
 
 @Data
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Geography {
-    @XmlElement
     Address address;
-
-    @XmlElement
     Float altitude;
-
-    @XmlElement
     Float latitude;
-
-    @XmlElement
     String location;
-
-    @XmlElement
     Float longitude;
-
-    @XmlElement
     Float timezone;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, altitude, latitude, location, longitude, timezone);
+    }
 }

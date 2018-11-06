@@ -35,9 +35,9 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "repetitiongroup")
 public class RepetitionGroup {
-    @XmlAnyElement
-    List<Dive> dives;
-
     @XmlAttribute
     String id;
+
+    @XmlAnyElement
+    List<Dive> dives;
 }

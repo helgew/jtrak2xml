@@ -32,4 +32,9 @@ public class Buddy extends Diver {
     public Buddy(String name) {
         super(name);
     }
+
+    @Override
+    public void setId(String id) {
+        this.id = "buddy-" + id;
+    }
 }

@@ -34,10 +34,7 @@ import java.util.List;
 @XmlRootElement(name = "dives")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RootElement {
-    @XmlElement
     String units = "Metric";
-
-    @XmlElement
     String schema = "2.2.0";
 
     @XmlElement(name = "dive")

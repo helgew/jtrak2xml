@@ -39,16 +39,14 @@ public class Dive {
     @XmlAttribute
     String id;
 
-    @XmlElement
     InformationBeforeDive informationbeforedive;
-
-    @XmlElement(name = "tankdata")
-    List<TankData> tankDataList;
 
     @XmlElementWrapper(name = "samples")
     @XmlElement(name = "waypoint")
     List<WayPoint> wayPoints;
 
-    @XmlElement
+    @XmlElement(name = "tankdata")
+    List<TankData> tankDataList;
+
     InformationAfterDive informationafterdive;
 }

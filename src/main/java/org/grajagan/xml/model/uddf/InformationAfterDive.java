@@ -36,28 +36,16 @@ import java.util.Set;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class InformationAfterDive {
-    @XmlElement
     Float lowesttemperature;
-
-    @XmlElement
     Float greatestdepth;
-
-    @XmlElement
     Float visibility;
-
-    @XmlElement
     Notes notes;
-
-    @XmlElement
     Rating rating;
-
-    @XmlElement
     Float diveduration;
 
     @XmlElementWrapper(name = "equipmentused")
     @XmlAnyElement
     Set<Link> links;
 
-    @XmlElement
     Float averagedepth;
 }

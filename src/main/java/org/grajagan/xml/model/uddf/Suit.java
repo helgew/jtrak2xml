@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.util.Objects;
 
 @Data
 @XmlRootElement
@@ -69,5 +70,24 @@ public class Suit {
         public String toString() {
             return type;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (!(obj instanceof Suit)) {
+            return false;
+        }
+
+        Suit that = (Suit) obj;
+
+        return (id != null && id.equals(that.id)) ||
+                (id == null && that.id == null);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
