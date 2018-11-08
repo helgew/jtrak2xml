@@ -24,14 +24,20 @@ package org.grajagan.jtrak2xml.gui;
 
 import lombok.Getter;
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 @Getter
 public class JTextAreaAppender extends AppenderSkeleton {
-    final ArrayList<LoggingEvent> eventsList = new ArrayList();
+    JTextArea logConsole;
+
+    public JTextAreaAppender() {
+        logConsole = new JTextArea(5, 50);
+    }
 
     @Override
     protected void append(LoggingEvent event) {
@@ -39,19 +45,19 @@ public class JTextAreaAppender extends AppenderSkeleton {
         if (event.getLoggerName().startsWith("org.grajagan") || event.getLevel()
                 .isGreaterOrEqual(Level.WARN)) {
 
-            if (layout.ignoresThrowable()) {
+            event.getLocationInformation();
+            logConsole.append(getLayout().format(event));
+
+            if (!layout.ignoresThrowable()) {
                 String[] s = event.getThrowableStrRep();
                 if (s != null) {
                     int len = s.length;
                     for (int i = 0; i < len; i++) {
-//                        this.qw.write(s[i]);
-//                        this.qw.write(Layout.LINE_SEP);
+                        logConsole.append(s[i]);
+                        logConsole.append(Layout.LINE_SEP);
                     }
                 }
             }
-
-            event.getLocationInformation();
-            eventsList.add(event);
         }
     }
 
