@@ -29,6 +29,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -85,7 +86,8 @@ public class StartUpDialog extends JDialog {
     private final JButton convertButton;
     private final JButton cancelButton;
 
-    public StartUpDialog(final Frame frame, Set<String> converterFormats) {
+    public StartUpDialog(final Frame frame, Set<String> converterFormats, final JTextArea
+            logConsole, final ImageIcon icon) {
         super(frame, true);
         setTitle("JTrak2XML");
 
@@ -190,6 +192,16 @@ public class StartUpDialog extends JDialog {
         form.add(panel, BorderLayout.PAGE_START);
         form.add(labelsAndFields, BorderLayout.CENTER);
 
+        JScrollPane logPane = new JScrollPane (logConsole,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        Border outsideBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        Border insideBorder = BorderFactory.createTitledBorder("Log Output");
+        Border theBorder = BorderFactory.createCompoundBorder(outsideBorder, insideBorder);
+        logPane.setBorder(theBorder);
+
+        form.add(logPane, BorderLayout.SOUTH);
+
         //Create an array specifying the number of dialog buttons
         //and their text.
         convertButton = new JButton(convertButtonText);
@@ -213,7 +225,7 @@ public class StartUpDialog extends JDialog {
 
         // Create the JOptionPane.
         optionPane = new JOptionPane(form, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION,
-                null, buttons, buttons[0]);
+                icon, buttons, buttons[0]);
 
         // Make this dialog display it.
         setContentPane(optionPane);

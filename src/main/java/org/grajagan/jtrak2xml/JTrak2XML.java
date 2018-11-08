@@ -10,12 +10,12 @@ package org.grajagan.jtrak2xml;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -48,6 +48,7 @@ import java.util.Set;
 public class JTrak2XML implements PropertyChangeListener, Runnable {
     private static final Logger logger = Logger.getLogger(JTrak2XML.class);
     private static JTextAreaAppender appender;
+    private static ImageIcon icon;
 
     static {
         Enumeration<Appender> e = logger.getParent().getAllAppenders();
@@ -155,14 +156,27 @@ public class JTrak2XML implements PropertyChangeListener, Runnable {
 
                 converter.export(dialog.getOutputFile(), person);
 
-                for (LoggingEvent e : appender.getEventsList()) {
-                    System.out.print(appender.getLayout().format(e));
-                }
-
+                JOptionPane.showOptionDialog(dialog, "<html><body>Your dives have been "
+                                + "successfully converted!<br/>Thank you for using "
+                                + "JTrak2XML!</body></html>", "Success!", JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE, icon, new Object[] { "Quit" }, null);
                 System.exit(0);
             } else { //user closed dialog or clicked cancel
+                JOptionPane.showOptionDialog(dialog, "Thank you for using "
+                                + "JTrak2XML!", null, JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE, icon, new Object[] { "Quit" }, null);
                 System.exit(0);
             }
+        }
+    }
+
+    private ImageIcon createImageIcon(String path, String description) {
+        URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            logger.error("Couldn't find file: " + path);
+            return null;
         }
     }
 
@@ -180,7 +194,9 @@ public class JTrak2XML implements PropertyChangeListener, Runnable {
         JFrame frame = new JFrame("JTrak2XML");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        dialog = new StartUpDialog(frame, converterMap.keySet());
+        icon = createImageIcon("/jtrak2xml-icon.png", "JTrak2XML icon");
+
+        dialog = new StartUpDialog(frame, converterMap.keySet(), appender.getLogConsole(), icon);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
