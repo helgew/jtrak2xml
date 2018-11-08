@@ -37,6 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <main-class>org.grajagan.jtrak2xml.JTrak2XML</main-class>
     </properties>
 
     <dependencies>
@@ -146,6 +147,13 @@
                 </includes>
                 <filtering>true</filtering>
             </resource>
+            <resource>
+                <directory>${project.basedir}/logo</directory>
+                <includes>
+                    <include>**/icon_128x128.png</include>
+                    <include>jtrak2xml.icns</include>
+                </includes>
+            </resource>
         </resources>
         <pluginManagement>
             <plugins>
@@ -186,6 +194,11 @@
                     <artifactId>license-maven-plugin</artifactId>
                     <version>1.16</version>
                 </plugin>
+                <plugin>
+                    <groupId>sh.tak.appbundler</groupId>
+                    <artifactId>appbundle-maven-plugin</artifactId>
+                    <version>1.2.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -212,7 +225,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.grajagan.jtrak2xml.JTrak2XML</mainClass>
+                            <mainClass>${main-class}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -231,6 +244,25 @@
                             <goal>update-file-header</goal>
                         </goals>
                         <phase>process-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>sh.tak.appbundler</groupId>
+                <artifactId>appbundle-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${main-class}</mainClass>
+                    <jrePath>/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk</jrePath>
+                    <iconFile>jtrak2xml.icns</iconFile>
+                    <diskImageFile>${project.basedir}/dist/${project.build.finalName}.dmg</diskImageFile>
+                    <generateDiskImageFile>true</generateDiskImageFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

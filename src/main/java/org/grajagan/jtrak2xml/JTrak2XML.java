@@ -194,7 +194,7 @@ public class JTrak2XML implements PropertyChangeListener, Runnable {
         JFrame frame = new JFrame("JTrak2XML");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        icon = createImageIcon("/jtrak2xml-icon.png", "JTrak2XML icon");
+        icon = createImageIcon("/icon_128x128.png", "JTrak2XML icon");
 
         dialog = new StartUpDialog(frame, converterMap.keySet(), appender.getLogConsole(), icon);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
