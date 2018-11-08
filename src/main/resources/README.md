@@ -1,4 +1,4 @@
-# ![JTrak2XML Icon](src/main/resources/jtrak2xml-icon.png?raw=true "JTrak2XML Icon") JTrak2XML 
+# ![JTrak2XML Icon](logo/jtrak2xml.iconset/icon_128x128.png?raw=true "JTrak2XML Icon") JTrak2XML 
 
 JTrak2XML converts dive log information managed with [JTrak](https://www.frobese.de/JTrak/en/jtrak.html) to generic XML-based formats.
 These can then be imported into other dive log software applications.
@@ -11,13 +11,16 @@ These can then be imported into other dive log software applications.
 ## Getting Started
 
 To convert your dive log into one of the XML formats supported, [download the latest release 
-(${project.version})](https://github.com/helgew/jtrak2xml/releases/download/${project.artifactId}-${project.version}/${project.artifactId}.${project.version}.${project.packaging})
-and run the jar from a terminal. For example, in OS X, you would run `Terminal.app`
-(look for it under `/Applications/Utilities`) and then use the following 
-command (assuming you downloaded the distribution to your `Downloads` folder):
+(${project.version})](https://github.com/helgew/jtrak2xml/releases/download/${project.artifactId}-${project.version}/${project.build.finalName}.dmg), open the disk image file and 
+run the application. Depending on your security settings, you may or may not have to [tell OS X 
+that indeed you want to run the application](https://www.mcvsd.org/tips/powerteacher/osx_unidentified_developers.html). 
+
+While not tested yet, you should also be able to convert JTrak logs on Linux or Windows.
+Simply [download the jar file](https://github.com/helgew/jtrak2xml/releases/download/${project.artifactId}-${project.version}/${project.artifactId}.${project.version}.${project.packaging})
+and run the jar from the commandline in a terminal:
 
 ```
-java -jar ~/Downloads/${project.artifactId}.${project.version}.${project.packaging}
+java -jar ${project.artifactId}.${project.version}.${project.packaging}
 ```
 
 ### Prerequisites
