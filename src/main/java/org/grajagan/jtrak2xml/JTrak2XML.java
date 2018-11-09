@@ -62,8 +62,6 @@ public class JTrak2XML implements PropertyChangeListener, Runnable {
         }
     }
 
-    ;
-
     StartUpDialog dialog;
 
     final Map<String, JTrak2XMLConverter> converterMap = new HashMap<>();
