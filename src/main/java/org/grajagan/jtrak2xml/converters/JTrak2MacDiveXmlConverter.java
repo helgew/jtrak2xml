@@ -217,58 +217,62 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
                 dive.setSite(site);
             }
 
-            LoggedDive loggedDive = (LoggedDive) jtrakDive;
-            int offset = loggedDive.isApneaOn() ? 60 : 15;
+            if (jtrakDive instanceof LoggedDive) {
+                LoggedDive loggedDive = (LoggedDive) jtrakDive;
+                int offset = loggedDive.isApneaOn() ? 60 : 15;
 
-            dive.setSampleInterval(60 / offset);
+                dive.setSampleInterval(60 / offset);
 
-            int[] depthData = loggedDive.getDepth_1mbar_Range();
+                int[] depthData = loggedDive.getDepth_1mbar_Range();
 
-            int[] tempData = null;
-            boolean haveTemperature = loggedDive.hasTempTrace();
-            if (haveTemperature) {
-                tempData = ((SmartProDive) jtrakDive).getTempTrend_01C_Range();
-            }
-
-            int[] tankPressureData = null;
-            boolean haveAirTrend = loggedDive.hasAirConsumption() && !loggedDive.isApneaOn();
-            if (haveAirTrend) {
-                tankPressureData = ((SmartComDive) jtrakDive).getTank_250mb_res();
-            }
-
-            List<Sample> samples = new ArrayList<>();
-            dive.setSamples(samples);
-
-            Float averageDepth = 0f;
-            Float depthSeconds = 0f;
-
-            for (int i = 0; i < depthData.length; i++) {
-                Sample sample = new Sample();
-
-                Float secs = (float) i * 60 / offset;
-                sample.setTime(secs);
-
-                Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
-                sample.setDepth((depthData[i] - depthData[0]) / 1000f * 10);
-
-                depthSeconds += (60 / offset) * depth;
-                averageDepth = depthSeconds / secs;
-
+                int[] tempData = null;
+                boolean haveTemperature = loggedDive.hasTempTrace();
                 if (haveTemperature) {
-                    sample.setTemperature(tempData[i] / 10f);
+                    tempData = ((SmartProDive) jtrakDive).getTempTrend_01C_Range();
                 }
 
-                if (haveAirTrend && tankPressureData[i] != 0) {
-                    sample.setPressure(tankPressureData[i] / 4f);
-                } else if (haveAirTrend) {
-                    int t = ((SmartComDive) jtrakDive).getTankAtPosition(i) - 1;
-                    sample.setPressure(gasList.get(t).getPressureStart());
+                int[] tankPressureData = null;
+                boolean haveAirTrend = loggedDive.hasAirConsumption() && !loggedDive.isApneaOn();
+                if (haveAirTrend) {
+                    tankPressureData = ((SmartComDive) jtrakDive).getTank_250mb_res();
                 }
 
-                samples.add(sample);
+                List<Sample> samples = new ArrayList<>();
+                dive.setSamples(samples);
+
+                Float averageDepth = 0f;
+                Float depthSeconds = 0f;
+
+                for (int i = 0; i < depthData.length; i++) {
+                    Sample sample = new Sample();
+
+                    Float secs = (float) i * 60 / offset;
+                    sample.setTime(secs);
+
+                    Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
+                    sample.setDepth((depthData[i] - depthData[0]) / 1000f * 10);
+
+                    depthSeconds += (60 / offset) * depth;
+                    averageDepth = depthSeconds / secs;
+
+                    if (haveTemperature) {
+                        sample.setTemperature(tempData[i] / 10f);
+                    }
+
+                    if (haveAirTrend && tankPressureData[i] != 0) {
+                        sample.setPressure(tankPressureData[i] / 4f);
+                    } else if (haveAirTrend) {
+                        int t = ((SmartComDive) jtrakDive).getTankAtPosition(i) - 1;
+                        sample.setPressure(gasList.get(t).getPressureStart());
+                    }
+
+                    samples.add(sample);
+                }
+
+                dive.setAverageDepth(averageDepth);
+            } else {
+                dive.setAverageDepth(jtrakDive.getAverageDepth() / 100f);
             }
-
-            dive.setAverageDepth(averageDepth);
         }
 
         try {

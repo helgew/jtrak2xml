@@ -249,7 +249,8 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
                 informationafterdive.setRating(rating);
             }
 
-            if (jtrakDive.getLocation() != null) {
+            String location = jtrakDive.getLocation();
+            if (location != null && diveSiteMap.containsKey(location)) {
                 Site site = diveSiteMap.get(jtrakDive.getLocation());
                 String country = jtrakDive.getCountry();
                 Address address = new Address();
@@ -372,54 +373,58 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
             computer = diveComputerMap.get(id);
             equipmentUsed.add(new Link(computer.getId()));
 
-            LoggedDive loggedDive = (LoggedDive) jtrakDive;
-            int offset = loggedDive.isApneaOn() ? 60 : 15;
-            int[] depthData = loggedDive.getDepth_1mbar_Range();
+            if (jtrakDive instanceof LoggedDive) {
+                LoggedDive loggedDive = (LoggedDive) jtrakDive;
+                int offset = loggedDive.isApneaOn() ? 60 : 15;
+                int[] depthData = loggedDive.getDepth_1mbar_Range();
 
-            int[] tempData = null;
-            boolean haveTemperature = loggedDive.hasTempTrace();
-            if (haveTemperature) {
-                tempData = ((SmartProDive) jtrakDive).getTempTrend_01C_Range();
-            }
-
-            int[] tankPressureData = null;
-            boolean haveAirTrend = loggedDive.hasAirConsumption() && !loggedDive.isApneaOn();
-            if (haveAirTrend) {
-                tankPressureData = ((SmartComDive) jtrakDive).getTank_250mb_res();
-            }
-
-            List<WayPoint> wayPoints = new ArrayList<>();
-            dive.setWayPoints(wayPoints);
-
-            Float averageDepth = 0f;
-            Float depthSeconds = 0f;
-
-            for (int i = 0; i < depthData.length; i++) {
-                WayPoint wayPoint = new WayPoint();
-                Float secs = (float) i * 60 / offset;
-                wayPoint.setDivetime(secs);
-
-                Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
-                wayPoint.setDepth(depth);
-
-                depthSeconds += (60 / offset) * depth;
-                averageDepth = depthSeconds / secs;
-
+                int[] tempData = null;
+                boolean haveTemperature = loggedDive.hasTempTrace();
                 if (haveTemperature) {
-                    wayPoint.setTemperature(getTempInK(tempData[i]));
+                    tempData = ((SmartProDive) jtrakDive).getTempTrend_01C_Range();
                 }
 
-                if (haveAirTrend && tankPressureData[i] != 0) {
-                    wayPoint.setTankpressure(tankPressureData[i] * 25000f);
-                } else if (haveAirTrend) {
-                    int t = ((SmartComDive) jtrakDive).getTankAtPosition(i) - 1;
-                    wayPoint.setTankpressure(tankDataList.get(t).getTankpressurebegin());
+                int[] tankPressureData = null;
+                boolean haveAirTrend = loggedDive.hasAirConsumption() && !loggedDive.isApneaOn();
+                if (haveAirTrend) {
+                    tankPressureData = ((SmartComDive) jtrakDive).getTank_250mb_res();
                 }
 
-                wayPoints.add(wayPoint);
+                List<WayPoint> wayPoints = new ArrayList<>();
+                dive.setWayPoints(wayPoints);
+
+                Float averageDepth = 0f;
+                Float depthSeconds = 0f;
+
+                for (int i = 0; i < depthData.length; i++) {
+                    WayPoint wayPoint = new WayPoint();
+                    Float secs = (float) i * 60 / offset;
+                    wayPoint.setDivetime(secs);
+
+                    Float depth = (depthData[i] - depthData[0]) / 1000f * 10;
+                    wayPoint.setDepth(depth);
+
+                    depthSeconds += (60 / offset) * depth;
+                    averageDepth = depthSeconds / secs;
+
+                    if (haveTemperature) {
+                        wayPoint.setTemperature(getTempInK(tempData[i]));
+                    }
+
+                    if (haveAirTrend && tankPressureData[i] != 0) {
+                        wayPoint.setTankpressure(tankPressureData[i] * 25000f);
+                    } else if (haveAirTrend) {
+                        int t = ((SmartComDive) jtrakDive).getTankAtPosition(i) - 1;
+                        wayPoint.setTankpressure(tankDataList.get(t).getTankpressurebegin());
+                    }
+
+                    wayPoints.add(wayPoint);
+                }
+
+                informationafterdive.setAveragedepth(averageDepth);
+            } else {
+                informationafterdive.setAveragedepth(jtrakDive.getAverageDepth() / 100f);
             }
-
-            informationafterdive.setAveragedepth(averageDepth);
         }
 
         try {
