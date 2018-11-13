@@ -5,7 +5,7 @@
 
     <groupId>org.grajagan</groupId>
     <artifactId>jtrak2xml</artifactId>
-    <version>1.0-beta-2-SNAPSHOT</version>
+    <version>1.0-beta-2</version>
 
     <name>JTrak to XML Converter</name>
     <licenses>
@@ -28,7 +28,7 @@
     <scm>
         <developerConnection>scm:git:https://github.com/helgew/jtrak2xml.git</developerConnection>
         <url>https://github.com/helgew/jtrak2xml.git</url>
-        <tag>HEAD</tag>
+        <tag>jtrak2xml-1.0-beta-2</tag>
     </scm>
 
     <inceptionYear>2002</inceptionYear>
