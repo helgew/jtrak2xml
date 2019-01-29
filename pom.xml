@@ -26,7 +26,7 @@
         </developer>
     </developers>
     <scm>
-        <developerConnection>scm:git:https://github.com/helgew/jtrak2xml.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:helgew/jtrak2xml.git</developerConnection>
         <url>https://github.com/helgew/jtrak2xml.git</url>
         <tag>HEAD</tag>
     </scm>
@@ -38,6 +38,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <main-class>org.grajagan.jtrak2xml.JTrak2XML</main-class>
+		<project.scm.id>github.com</project.scm.id>
     </properties>
 
     <dependencies>
