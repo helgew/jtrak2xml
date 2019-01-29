@@ -167,7 +167,7 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
             }
 
             Dive dive = new Dive();
-            dive.setId("dive_" + ++diveCounter);
+            dive.setId("dive_" + jtrakDive.getDate().getTime()/1000);
 
             diveList.add(dive);
 
@@ -175,7 +175,7 @@ public class JTrak2UDDFConverter extends AbstractJTrak2XMLConverter {
             InformationBeforeDive informationbeforedive = new InformationBeforeDive();
             dive.setInformationbeforedive(informationbeforedive);
 
-            informationbeforedive.setDivenumber(diveCounter);
+            informationbeforedive.setDivenumber(++diveCounter);
 
             Set<Link> infoBeforeLinks = new HashSet<>();
             infoBeforeLinks.add(new Link(owner.getId()));

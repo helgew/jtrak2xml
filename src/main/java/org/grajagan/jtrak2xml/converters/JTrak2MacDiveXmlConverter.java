@@ -84,7 +84,6 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
 
         Profile profile = getLogbuchManager().getProfile(0);
 
-        int diveCounter = 0;
         int repetitiveDive = 0;
 
         Map<String, Item> diveComputerMap = new HashMap<>();
@@ -101,7 +100,7 @@ public class JTrak2MacDiveXmlConverter extends AbstractJTrak2XMLConverter {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             dive.setDate(format.format(jtrakDive.getDate()));
 
-            dive.setIdentifier("dive_" + ++diveCounter);
+            dive.setIdentifier("dive_" + jtrakDive.getDate().getTime()/1000);
             dive.setSurfaceInterval(jtrakDive.getInterval());
             dive.setRating(jtrakDive.getVote());
             dive.setRepetitiveDive(++repetitiveDive);
